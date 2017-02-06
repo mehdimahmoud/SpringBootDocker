@@ -17,7 +17,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'docker'
 
 jar {
-	baseName = 'spring-boot-docker'
+	baseName = 'springbootdocker'
 	version = '0.0.1-SNAPSHOT'
 }
 
@@ -45,12 +45,15 @@ task wrapper(type: Wrapper){
 	gradleVersion = "3.3"
 }
 
+group = "mmik"
 task buildDocker(type: Docker, dependsOn:build) {
-	push = true
+	push = false
 	applicationName = jar.baseName
-	dockerfile = file("src/main/docker/dockerFile")
+	dockerfile = file("src/main/docker/Dockerfile")
 	doFirst {
+	  copy {
 		from jar
 		into stageDir
+	  }
 	}
 }
